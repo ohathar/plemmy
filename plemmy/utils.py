@@ -86,5 +86,6 @@ def create_form(arguments: dict) -> dict:
     """
     # test if this was fixed in 0.18.3
     return {k: v for k, v in arguments.items()
+            if v is not None and k != "self"}
     #return {k: str(v).lower() if isinstance(v, bool) else v for k, v in arguments.items()
     #        if v is not None and k != "self"}

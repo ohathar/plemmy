@@ -1332,7 +1332,7 @@ class LemmyHttp(object):
 
         form = create_form(locals())
         re = post_handler(f"{self._api_url}/user/login", self._headers, form)
-        self.key = re.json()["jwt"]
+        self.key = re.json().get("jwt") if re.json.get("jwt") is not None else None
         return re
 
     def mark_all_as_read(self) -> requests.Response:

@@ -24,8 +24,22 @@ def post_handler(url: str, headers: dict, json: dict) -> requests.Response:
         return None
     return re
 
-def post_handler_image(url: str, headers: dict, cookies: dict, images) -> requests.Response:
-    """ post_handler: handles all IMAGE POST operations for Plemmy
+def get_handler_image(url: str, headers: dict, delete_token: str, filename: str) -> requests.Response:
+    """ get_handler_image: handles deletion of images"""
+    logger = logging.getLogger(__name__)
+
+    try:
+        re = requests.get(f'{url}/delete/{delete_token}/{filename}', headers=headers, timeout=30)
+        logger.debug(f"Code: {re.status_code}")
+        logger.info(f're.text: {re.text}')
+    except requests.exceptions.RequestException as ex:
+        logger.error(f"GET error: {ex}\n\nURL: {url}" +
+                     f"\nheaders: {headers}\njson: {json}")
+        return None
+    return re
+
+def post_handler_image(url: str, headers: dict, cookies: dict, json: dict, images=None) -> requests.Response:
+    """ post_handler_image: handles all IMAGE POST operations for Plemmy
 
     Args:
         url (str): Lemmy API URL
@@ -38,8 +52,10 @@ def post_handler_image(url: str, headers: dict, cookies: dict, images) -> reques
 
     logger = logging.getLogger(__name__)
     try:
+
         re = requests.post(url, headers=headers, cookies=cookies, files=images, timeout=30)
         logger.debug(f"Code: {re.status_code}")
+        logger.info(f're.text: {re.text}')
     except requests.exceptions.RequestException as ex:
         logger.error(f"POST error: {ex}\n\nURL: {url}" +
                      f"\nheaders: {headers}\njson: {json}")

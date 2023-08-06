@@ -3,7 +3,7 @@ import logging
 import requests
 
 
-from .utils import post_handler, post_handler_image, put_handler, get_handler, create_form
+from .utils import post_handler, post_handler_image, put_handler, get_handler, get_handler_image, create_form
 
 API_VERSION = "v3"
 
@@ -32,13 +32,25 @@ class LemmyHttp(object):
     def upload_image(self, images) -> requests.Response:
         cookies = {}
         cookies['jwt'] = self.key
+        json = None
         
         return post_handler_image(
             f"{self.img_url}",
             self._headers,
             cookies,
-            images
+            json=json,
+            images=images
         )
+    
+    def delete_image(self, delete_token, filename) -> requests.Response:
+        
+        return get_handler_image(
+            f"{self.img_url}",
+            self._headers,
+            delete_token=delete_token,
+            filename=filename
+        )
+
 
     def add_admin(self, added: bool, person_id: int) -> requests.Response:
         """ add_admin: add admin to Lemmy instance

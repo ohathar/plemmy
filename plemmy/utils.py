@@ -24,7 +24,7 @@ def post_handler(url: str, headers: dict, json: dict) -> requests.Response:
         return None
     return re
 
-def post_handler_image(url: str, headers: dict, json: dict, files: FileStorage) -> requests.Response:
+def post_handler_image(url: str, headers: dict, json: dict, files) -> requests.Response:
     """ post_handler: handles all IMAGE POST operations for Plemmy
 
     Args:

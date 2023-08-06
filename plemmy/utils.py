@@ -24,6 +24,28 @@ def post_handler(url: str, headers: dict, json: dict) -> requests.Response:
         return None
     return re
 
+def post_handler_image(url: str, headers: dict, json: dict, files: FileStorage) -> requests.Response:
+    """ post_handler: handles all IMAGE POST operations for Plemmy
+
+    Args:
+        url (str): Lemmy API URL
+        headers (dict): optional headers
+        json (dict): json/form data to be posted
+
+    Returns:
+        requests.Response: server response for POST operation
+    """
+
+    logger = logging.getLogger(__name__)
+    try:
+        re = requests.post(url, headers=headers, json=json, files=files, timeout=30)
+        logger.debug(f"Code: {re.status_code}")
+    except requests.exceptions.RequestException as ex:
+        logger.error(f"POST error: {ex}\n\nURL: {url}" +
+                     f"\nheaders: {headers}\njson: {json}")
+        return None
+    return re
+
 
 def put_handler(url: str, headers: dict, json: dict) -> requests.Response:
     """ put_handler: handles all PUT operations for Plemmy

@@ -24,13 +24,13 @@ def post_handler(url: str, headers: dict, json: dict) -> requests.Response:
         return None
     return re
 
-def post_handler_image(url: str, headers: dict, json: dict, files) -> requests.Response:
+def post_handler_image(url: str, headers: dict, cookies: dict, images) -> requests.Response:
     """ post_handler: handles all IMAGE POST operations for Plemmy
 
     Args:
         url (str): Lemmy API URL
         headers (dict): optional headers
-        json (dict): json/form data to be posted
+        cookies (dict): jwt auth
 
     Returns:
         requests.Response: server response for POST operation
@@ -38,7 +38,7 @@ def post_handler_image(url: str, headers: dict, json: dict, files) -> requests.R
 
     logger = logging.getLogger(__name__)
     try:
-        re = requests.post(url, headers=headers, json=json, files=files, timeout=30)
+        re = requests.post(url, headers=headers, cookies=cookies, files=images, timeout=30)
         logger.debug(f"Code: {re.status_code}")
     except requests.exceptions.RequestException as ex:
         logger.error(f"POST error: {ex}\n\nURL: {url}" +

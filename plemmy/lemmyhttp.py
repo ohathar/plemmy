@@ -2,6 +2,7 @@ from typing import List
 import logging
 import requests
 
+
 from .utils import post_handler, post_handler_image, put_handler, get_handler, create_form
 
 API_VERSION = "v3"
@@ -28,16 +29,15 @@ class LemmyHttp(object):
         self.key = ""
         self.logger = logging.getLogger(__name__)
 
-    def upload_image(self, files) -> requests.Response:
-        form = create_form(locals())
-        form['auth'] = self.key
+    def upload_image(self, images) -> requests.Response:
+        cookies = {}
+        cookies['jwt'] = self.key
         
-        #app.logger.info(f'upload_image form in lemmy.py: {form}')
         return post_handler_image(
             f"{self.img_url}",
             self._headers,
-            form,
-            files
+            cookies,
+            images
         )
 
     def add_admin(self, added: bool, person_id: int) -> requests.Response:

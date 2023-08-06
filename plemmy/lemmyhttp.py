@@ -23,9 +23,19 @@ class LemmyHttp(object):
         """
 
         self._api_url = base_url + f"/api/{API_VERSION}"
+        self.img_url = f'{base_url}/pictrs/image'
         self._headers = headers
         self.key = ""
         self.logger = logging.getLogger(__name__)
+
+    def upload_image(self) -> requests.Response:
+        form = create_form(locals())
+        form['auth'] = self.key
+        return post_handler(
+            f"{self.img_url}",
+            self._headers,
+            form
+        )
 
     def add_admin(self, added: bool, person_id: int) -> requests.Response:
         """ add_admin: add admin to Lemmy instance

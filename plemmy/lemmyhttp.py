@@ -32,7 +32,7 @@ class LemmyHttp(object):
         form = create_form(locals())
         form['auth'] = self.key
         form['files'] = files
-        app.logger.info(f'upload_image form in lemmy.py: {form}')
+        #app.logger.info(f'upload_image form in lemmy.py: {form}')
         return post_handler(
             f"{self.img_url}",
             self._headers,

@@ -2,7 +2,7 @@ from typing import List
 import logging
 import requests
 
-from .utils import post_handler, put_handler, get_handler, create_form
+from .utils import post_handler, post_handler_image, put_handler, get_handler, create_form
 
 API_VERSION = "v3"
 

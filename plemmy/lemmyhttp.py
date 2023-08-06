@@ -31,12 +31,13 @@ class LemmyHttp(object):
     def upload_image(self, files) -> requests.Response:
         form = create_form(locals())
         form['auth'] = self.key
-        form['files'] = files
+        
         #app.logger.info(f'upload_image form in lemmy.py: {form}')
         return post_handler_image(
             f"{self.img_url}",
             self._headers,
-            form
+            form,
+            files
         )
 
     def add_admin(self, added: bool, person_id: int) -> requests.Response:
